@@ -1,0 +1,48 @@
+---
+title: "Project01_Lead-IQ"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+library(readr)
+
+setwd("~/Desktop/Proj01_Git/DataRaw")
+
+lead_iq <- read.csv("lead-iq-01.csv")
+print(lead_iq)
+```
+```{r}
+boxplot(IQ~Smelter, data = lead_iq, main = "IQ vs. Distance from Smelter")
+```
+
+```{r}
+boxplot(IQ~Smelter, data = lead_iq, main = "IQ vs. Distance from Smelter", ylim=c(0,150))
+```
+
+```{r}
+knitr::kable(lead_iq)
+```
+
+The "lead_iq" data set looks at a small portion of El Paso children ages 3 to 15 that live various distances from a lead-emitting ore smelter. Here, we have 124 observations (children) and 2 variables: distance from lead-emitting ore smelter (Near = 1 mile or less; Far = more than 1 mile away) and IQ level. In the boxplots above, we can see that the median IQ level for children living more than 1 mile away from the smelter is higher compared to the median IQ of children living near the smelter. This idea holds true for the entire interquartile range, or IQR (25th percentile to 75th percentile range) of the "far" group vs. "near" group. However, the "far" group appears to have a much wider distribution due to several extreme outliers on both sides of the IQ spectrum. Most notably, the IQ of 999 can be chalked up to a data collection error since human IQ tends to have an average of 100 with standard deviation of 15. It is most likely impossible that someone would have an IQ that is 10x greater than the average human IQ (not to mention, that many standard deviations greater). 
+
+In addition, the table generated above is simply a reflection of the data portrayed in the boxplots. In table form, we can see the IQ levels of all 124 observed children along with the distance from which each child lives from the smelter.
+
+```{r}
+far_smelt <- subset(lead_iq, Smelter=="Far"&IQ)
+mean(far_smelt$IQ)
+```
+
+```{r}
+near_smelt <- subset(lead_iq, Smelter=="Near"&IQ)
+mean(near_smelt$IQ)
+```
